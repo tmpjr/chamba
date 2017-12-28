@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  database:
+    build: ./database/
+    ports:
+      - "5432:5432"
+      
+  api:
+    build: ./api/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+
+  www:
+    build: ./www/
+    volumes:
+      - ./www:/usr/share/nginx/html
+    ports:
+      - "8888:80"
+    depends_on:
+      - api
