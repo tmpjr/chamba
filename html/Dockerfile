@@ -10,9 +10,8 @@ RUN apt-get update && apt-get install -y nodejs
 
 RUN npm install -g webpack cross-env
 
-ADD . /usr/share/nginx/html
+#ADD . /usr/share/nginx/html
 WORKDIR /usr/share/nginx/html
-RUN npm install
 
 CMD ["nginx", "-g", "daemon off;"]
 

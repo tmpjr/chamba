@@ -1,6 +1,6 @@
 # chamba
 
-> A Vue.js project
+> Invoice Software
 
 ## Build Setup
 

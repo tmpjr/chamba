@@ -1,23 +1,30 @@
 version: '2'
 
 services:
-  database:
-    build: ./database/
+  db:
+    image: postgres:alpine
+    restart: always
     ports:
       - "5432:5432"
-      
+
   api:
     build: ./api/
     ports:
       - "3000:3000"
     depends_on:
-      - database
+      - db
+    links:
+      - db:db
 
-  www:
-    build: ./www/
+  html:
+    build: ./html/
     volumes:
-      - ./www:/usr/share/nginx/html
+      - ./html:/usr/share/nginx/html
     ports:
-      - "8888:80"
-    depends_on:
-      - api
+      - "8080:80"
+    depends_on: 
+      - api 
+    links:
+      - api:api
+    
+
