@@ -58,11 +58,12 @@
 				drawer: false,
         dialog: false,
         username: 'tmpjr',
+        isLoggedIn: false,
         items: [
           { icon: 'dashboard', text: 'Dashboard', to: 'dashboard' },
           { icon: 'people', text: 'Clients', to: 'clients' }
         ]
 			}
-		}
+    }
 	}
 </script>
