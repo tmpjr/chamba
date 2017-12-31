@@ -9,36 +9,51 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12>
-                <v-text-field v-model="record.username" label="Username" required></v-text-field>
+                <v-text-field v-model="email" label="Email" required></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="record.password" type="password" label="Password" required></v-text-field>
+                <v-text-field v-model="password" type="password" label="Password" required></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary">LOGIN</v-btn>
+          <v-btn color="primary" @click="login">LOGIN</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar
+      color="error"
+      v-model="showErrorMsg"
+      top="top"
+    >{{ errorMsg }}</v-snackbar>
   </v-layout>
 </template>
 <script>
+import firebase from 'firebase'
+
 export default {
   data() {
     return {
+      showErrorMsg: false,
+      errorMsg: '',
       dialog: true,
-      record: {
-        username: '',
-        password: ''
-      }
+      email: '',
+      password: ''
     }
   },
-  computed: {
-    dialog() {
-      return !this.isLoggedIn
+  methods: {
+    login() {
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+        (user) => {
+          this.$router.replace('dashboard')
+        },
+        (err) => {
+          this.errorMsg = "Oops. " + err.message
+          this.showErrorMsg = true
+        }
+      )
     }
   }
 }
